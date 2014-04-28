@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
             // remove the hyphen and spaces in the front
             columnName = columnName.replace(/-/gi,'').trim();
             workflow_options[columnName] = workflow_id;
-            alert(columnName + ' - ' + workflow_id);
+            // alert(columnName + ' - ' + workflow_id);
         }
         var swimlane_options = {};
         var swimlanes = document.getElementsByClassName('swimlane_header');
