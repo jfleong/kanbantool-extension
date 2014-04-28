@@ -1,0 +1,33 @@
+{
+    "manifest_version": 2,
+    "name":    "kanbantool.com Extension",
+    "version": "0.0",
+    "author": [ {
+            "name": "Jason Leong",
+            "email": "jason.f.leong@gmail.com"
+        }, 
+        {
+            "name": "Amol Mittal",
+            "email": "amol@humsara.com"
+        }
+    ],
+    "offline_enabled": true,
+
+    "background": {
+        "persistent": false,
+        "scripts": ["background.js"]
+    },
+
+    "content_scripts": [{
+        "matches":    ["*://*.kanbantool.com/*"],
+        "js":         ["./content.js"],
+        "run_at":     "document_idle",
+        "all_frames": false
+    }],
+
+    "page_action": {
+        "default_title": "Test Extension",
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    }
+}
