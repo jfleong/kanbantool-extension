@@ -60,7 +60,6 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
         data = {};
         var boardHeading = document.getElementById('board_heading');
         headingRows = boardHeading.getElementsByTagName('tr');
-        // to be constructed then depth first traversed
         graph = {};
         leafIdToName = {};
         for (i = 0; i < headingRows.length; i++) {
@@ -74,14 +73,13 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
                 }
                 // workflow_state_id_th we only want id
                 idString = th.getAttribute('id');
-                workflowId = id_string.substring(15, idString.length - 3);
+                workflowId = idString.substring(15, idString.length - 3);
                 columnName = '';
                 if (th.getElementsByClassName('hide_when_collapsed')[0]) {
                     columnName = th.getElementsByClassName('hide_when_collapsed')[0].firstElementChild.innerText.trim();
                 }
                 branches = [];
                 var classList = th.className.split(/\s+/);
-                currentNode = graph;
                 for (var k = 0; k < classList.length; k++) {
                     classItem = classList[k];
                    if (classItem.indexOf('child_of') > -1) {
