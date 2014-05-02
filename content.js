@@ -60,8 +60,8 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
         data = {};
         var boardHeading = document.getElementById('board_heading');
         headingRows = boardHeading.getElementsByTagName('tr');
-        graph = {};
         leafIdToName = {};
+        pathMap = [];
         for (i = 0; i < headingRows.length; i++) {
             tr = headingRows[i];
             columns = tr.getElementsByTagName('th');
@@ -78,25 +78,29 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
                 if (th.getElementsByClassName('hide_when_collapsed')[0]) {
                     columnName = th.getElementsByClassName('hide_when_collapsed')[0].firstElementChild.innerText.trim();
                 }
-                branches = [];
+                parents = [];
                 var classList = th.className.split(/\s+/);
                 for (var k = 0; k < classList.length; k++) {
                     classItem = classList[k];
                    if (classItem.indexOf('child_of') > -1) {
                         id = classItem.substring(9, classItem.length)
-                        branches.push(id);
+                        parents.push(id);
                     }
                 }
-                console.log("parents of " + workflowId + "(" + columnName +") | " + branches.toString())
                 // if leaf keep track of it
                 isLeaf = th.classList.contains('leaf');
                 if (isLeaf) {
                     columnName = th.getElementsByClassName('hide_when_collapsed')[0].firstElementChild.innerText;
-                    leafIdToName[id_string] = columnName;
+                    leafIdToName[workflowId] = columnName;
                 }
+                toAdd = {myId : workflowId, parents : parents}
+                pathMap.push(toAdd);
             }
         }
-        console.log(graph);
+        console.log(pathMap);
+        // now start constructing the graph
+        // TODO: make a graph like object
+         
         var swimlane_options = {};
         var swimlanes = document.getElementsByClassName('swimlane_header');
         for (i = 0; i < swimlanes.length; i += 1 ) {
